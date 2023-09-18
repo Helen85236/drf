@@ -1,12 +1,19 @@
+from django.conf import settings
 from django.db import models
 
 from users.models import NULLABLE, User
 
 
 class Course(models.Model):
+    """
+    Stores a single course entry.
+    """
     name = models.CharField(max_length=100, verbose_name='name')
     preview = models.ImageField(**NULLABLE, verbose_name='image')
     description = models.TextField(verbose_name='description')
+    # User that creates the course
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                              verbose_name='owner', **NULLABLE)
 
     def __str__(self):
         return f'{self.name}'
@@ -18,6 +25,9 @@ class Course(models.Model):
 
 
 class Lesson(models.Model):
+    """
+    Stores a single lesson entry, related to :model:`courses.Course`.
+    """
     name = models.CharField(max_length=100, verbose_name='name')
     preview = models.ImageField(**NULLABLE, verbose_name='image')
     description = models.TextField(verbose_name='description')
@@ -25,6 +35,8 @@ class Lesson(models.Model):
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE,
                                verbose_name='course', related_name='lessons')
+    # User that creates the lesson
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='owner', **NULLABLE)
 
     def __str__(self):
         return f'{self.name}'
@@ -36,6 +48,10 @@ class Lesson(models.Model):
 
 
 class Payment(models.Model):
+    """
+    Stores a single payment entry, related to :model:`courses.Course`
+    or to :model:`courses.Lesson`; and to :model:`users.User` .
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE,
                              verbose_name='user', related_name='payments')
     date_paid = models.DateTimeField(auto_now_add=True,
