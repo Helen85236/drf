@@ -5,15 +5,22 @@ from courses.models import Lesson, Course, Payment
 
 
 class LessonSerializer(serializers.ModelSerializer):
-
+    """
+    Serializer for :model:`courses.Lesson`
+    """
     class Meta:
         model = Lesson
         fields = '__all__'
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    """
+    Serializer for :model:`courses.Course`
+    """
+    # Number of lessons in the course
     lesson_count = IntegerField(source='lesson_set.count', required=False)
-    lessons = LessonSerializer(many=True)
+    # List of lessons in the course
+    lessons = LessonSerializer(many=True, required=False)
 
     class Meta:
         model = Course
@@ -21,7 +28,9 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class PaymentSerializer(serializers.ModelSerializer):
-
+    """
+    Serializer for :model:`courses.Payment`
+    """
     class Meta:
         model = Payment
         fields = '__all__'
