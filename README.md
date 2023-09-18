@@ -1,6 +1,6 @@
 # drf
 <h3>What does this project do.</h3>
-the program is a micro-service with a web interface. designed to organize mailings via email with separation of rights.
+Self Learning Platform service
 <h3>How to prepare.</h3>
 Be sure that you are going use it under linux-compatible operation system.
 this program use next external components:
@@ -30,5 +30,4 @@ and next for create default users
 <h3>Ноw it works.</h3>
 Start the server with
 >python manage.py runserver
-you will find web interface of the service on 
-http://127.0.0.1:8000/
+
