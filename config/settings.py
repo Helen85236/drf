@@ -46,6 +46,11 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'django_filters',
+    # For commenting
+    'django.contrib.admindocs',
+
+    # Celery
+    'django_celery_beat',
 
     'users',
     'courses',
@@ -133,6 +138,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+LOGS_ROOT = BASE_DIR / 'logs'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -149,3 +156,15 @@ REST_FRAMEWORK = {
 }
 
 STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
+
+# Celery settings
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+
+# Mailing service settings
+EMAIL_HOST = os.getenv('EMAIL_HOST')                    # using smtp.gmail.com
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')          # google account
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # google app password
+EMAIL_PORT = 587                                        # google port 587
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', False) == 'True'
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', False) == 'True'
